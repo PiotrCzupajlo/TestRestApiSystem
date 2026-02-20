@@ -13,10 +13,20 @@ namespace testapi.Controllers
         {
             _context = context;
         }
-        [HttpGet]
-        public IActionResult Get(User user)
+        [HttpPost("login-user")]
+        public async Task<IActionResult> logIn(string email,string password)
         {
-            return Ok("Example");
+            string regexPattern = @"[^;]"; //anti sql injection
+            bool isValid = Regex.IsMatch(email, regexPattern);
+            if (!isValid)
+            {
+                return BadRequest("Invalid email format.");
+            }
+            var user = _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
+            if (user != null)
+                return Ok("User Found");
+            else
+                return NotFound("User Not Found");
         }
         [HttpPost("insert-user")]
         public async Task<IActionResult> AddUser(string name, string email, string password)

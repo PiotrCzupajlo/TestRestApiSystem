@@ -1,8 +1,9 @@
 using testapi.DB;
 using Microsoft.EntityFrameworkCore;
+using testapi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddScoped<IExchange, Exchange>();
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'testapiContext' not found.")));
