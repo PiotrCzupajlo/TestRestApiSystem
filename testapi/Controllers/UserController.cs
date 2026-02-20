@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using testapi.DB;
 using testapi.Models;
-
+using System.Text.RegularExpressions;
 namespace testapi.Controllers
 {
     [ApiController]
@@ -27,6 +27,16 @@ namespace testapi.Controllers
                 Email = email,
                 Password = password
             };
+            if(password.Length<8)
+            {
+                return BadRequest("Password must be at least 8 characters long.");
+            }
+            string regexpattern = @"^[\w\.]+@[\w]+\.[\w]+$";
+            bool isValid = Regex.IsMatch(email, regexpattern);
+            if (!isValid)
+            { 
+            return BadRequest("Invalid email format.");
+            }
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return Ok("Succes");
