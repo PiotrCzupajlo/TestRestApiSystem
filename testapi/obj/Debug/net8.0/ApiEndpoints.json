@@ -1,16 +1,6 @@
 [
   {
     "ContainingType": "testapi.Controllers.HomeController",
-    "Method": "Index",
-    "RelativePath": "Home",
-    "HttpMethod": "",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "testapi.Controllers.HomeController",
     "Method": "Get",
     "RelativePath": "Home",
     "HttpMethod": "GET",
@@ -20,24 +10,65 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "testapi.Controllers.WeatherForecastController",
+    "ContainingType": "testapi.Controllers.UserController",
     "Method": "Get",
-    "RelativePath": "WeatherForecast",
+    "RelativePath": "User",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
+    "Parameters": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[testapi.WeatherForecast, testapi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
+        "Name": "user",
+        "Type": "testapi.Models.User",
+        "IsRequired": true
       }
     ],
-    "EndpointName": "GetWeatherForecast"
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "testapi.Controllers.UserController",
+    "Method": "Delete",
+    "RelativePath": "User",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "testapi.Controllers.UserController",
+    "Method": "Put",
+    "RelativePath": "User",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "testapi.Controllers.UserController",
+    "Method": "AddUser",
+    "RelativePath": "User/insert-user",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "password",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

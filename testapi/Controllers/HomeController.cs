@@ -2,12 +2,11 @@
 
 namespace testapi.Controllers
 {
-    public class HomeController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class HomeController : ControllerBase
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+
         [HttpGet]
         public IActionResult Get()
         {
