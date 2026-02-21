@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using System.Runtime.InteropServices;
 using testapi.DB;
 using testapi.Models;
 
@@ -8,12 +10,14 @@ namespace testapi.Controllers
     [Route("[controller]")]
     public class ProductsController : ControllerBase
     {
+        private IHubContext<NotificationsHub> _hubContext;
         private IExchange _exchange;
         private AppDbContext AppDbContext;
-        public ProductsController(IExchange exchange,AppDbContext context) :base()
+        public ProductsController(IExchange exchange,AppDbContext context, IHubContext<NotificationsHub> hubContext) :base()
         {
             _exchange = exchange;
             AppDbContext = context;
+            _hubContext = hubContext;
         }
         [HttpPost("exchange")]
         public async Task<IActionResult> GetExchangeRate(string currency)
@@ -33,7 +37,9 @@ namespace testapi.Controllers
                 return BadRequest("Product already exists.");
             AppDbContext.Products.Add(product);
             await AppDbContext.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("ProductCreated", product);
             return Ok(product);
+
         }
         [HttpPut("update-price")]
         public async Task<IActionResult> UpdatePrice(int id, decimal newPrice,int userID)
@@ -48,6 +54,8 @@ namespace testapi.Controllers
                 return NotFound("Product not found.");
             product.Price = newPrice;
             await AppDbContext.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("Price Updated", product);
+            
             return Ok(product);
         }
     }
