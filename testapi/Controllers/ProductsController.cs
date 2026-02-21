@@ -35,6 +35,20 @@ namespace testapi.Controllers
             await AppDbContext.SaveChangesAsync();
             return Ok(product);
         }
-
+        [HttpPut("update-price")]
+        public async Task<IActionResult> UpdatePrice(int id, decimal newPrice,int userID)
+        {
+            var user = AppDbContext.Users.FirstOrDefault(u => u.ID == userID);
+            if (user == null)
+                return NotFound("User not found.");
+            if (user.AdminAcces == 0)
+                return Forbid("User does not have admin access.");
+            var product = AppDbContext.Products.FirstOrDefault(p => p.ID == id);
+            if (product == null)
+                return NotFound("Product not found.");
+            product.Price = newPrice;
+            await AppDbContext.SaveChangesAsync();
+            return Ok(product);
+        }
     }
 }

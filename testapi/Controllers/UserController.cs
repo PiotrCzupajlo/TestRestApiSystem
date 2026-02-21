@@ -24,7 +24,7 @@ namespace testapi.Controllers
             }
             var user = _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
             if (user != null)
-                return Ok("User Found");
+                return Ok("User Found:" + user.ID);
             else
                 return NotFound("User Not Found");
         }
@@ -35,7 +35,9 @@ namespace testapi.Controllers
             {
                 Name = name,
                 Email = email,
-                Password = password
+                Password = password,
+                AdminAcces=0
+                
             };
             if(password.Length<8)
             {
