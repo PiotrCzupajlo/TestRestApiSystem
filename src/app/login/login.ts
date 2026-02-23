@@ -23,6 +23,7 @@ const dane = {email:this.email,password:this.password};
 this.Auth.login(dane).subscribe({
 next:(response)=>{
   console.log('succes',response)
+  console.log(response.ID)
   this.change_to_logged.emit(response.ID)
 },
 error:(exception)=>{

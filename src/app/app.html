@@ -2,10 +2,15 @@
   <app-nav-bar [Title]=Title></app-nav-bar>
   @if(loginb)
   {
-  <app-login (change_to_register)="ChangeToRegister()"></app-login>
+  <app-login (change_to_register)="ChangeToRegister()"  (change_to_logged)="ChangeToLogged($event)"></app-login>
   }
- @if(registerb)
+ @else if(registerb)
  {
 
   <app-register (login_alert)="ChangeToLogIn()"></app-register>
  }
+@else
+{
+<p>Witaj {{username}}</p>
+
+}
