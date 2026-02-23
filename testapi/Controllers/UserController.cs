@@ -2,6 +2,7 @@
 using testapi.DB;
 using testapi.Models;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 namespace testapi.Controllers
 {
     [ApiController]
@@ -29,29 +30,40 @@ namespace testapi.Controllers
                 return NotFound("User Not Found");
         }
         [HttpPost("insert-user")]
-        public async Task<IActionResult> AddUser(string name, string email, string password)
+        public async Task<IActionResult> AddUser(RegisterUser user)
         {
-            var user = new User
+            var new_user = new User
             {
-                Name = name,
-                Email = email,
-                Password = password,
+                Name = user.name,
+                Email = user.email,
+                Password = user.password,
                 AdminAcces=0
                 
             };
-            if(password.Length<8)
+            if(user.password.Length<8)
             {
                 return BadRequest("Password must be at least 8 characters long.");
             }
             string regexpattern = @"^[\w\.]+@[\w]+\.[\w]+$";
-            bool isValid = Regex.IsMatch(email, regexpattern);
+            bool isValid = Regex.IsMatch(user.email, regexpattern);
             if (!isValid)
             { 
             return BadRequest("Invalid email format.");
             }
-            _context.Users.Add(user);
+            _context.Users.Add(new_user);
             await _context.SaveChangesAsync();
-            return Ok("Succes");
+            return Ok("{}");
+        
+        }
+        [HttpPost("get-name-by-id")]
+        public async Task<IActionResult> GetNameById(OnlyId id)
+        {
+            User user = await _context.Users.FirstOrDefaultAsync(u => u.ID == id.id);
+            if (user == null)
+                return BadRequest("{\"Reason\":\"Wrong Id}");
+            else
+                return Ok("{\"name\":\""+user.Name+"\"}");
+        
         
         }
         [HttpDelete]
