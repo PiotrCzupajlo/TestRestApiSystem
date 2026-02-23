@@ -14,17 +14,17 @@ namespace testapi.Controllers
             _context = context;
         }
         [HttpPost("login-user")]
-        public async Task<IActionResult> logIn(string email,string password)
+        public async Task<IActionResult> LogIn(LogInUser user)
         {
-            string regexPattern = @"[^;]"; //anti sql injection
-            bool isValid = Regex.IsMatch(email, regexPattern);
+            string regexPattern = @"^[\w\.]+@[\w]+\.[\w]+$"; 
+            bool isValid = Regex.IsMatch(user.email, regexPattern);
             if (!isValid)
             {
                 return BadRequest("Invalid email format.");
             }
-            var user = _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
-            if (user != null)
-                return Ok("User Found:" + user.ID);
+            var user_n = _context.Users.FirstOrDefault(u => u.Email == user.email && u.Password == user.password);
+            if (user_n != null)
+                return Ok("{\"ID\":\"" + user_n.ID+"\"}");
             else
                 return NotFound("User Not Found");
         }

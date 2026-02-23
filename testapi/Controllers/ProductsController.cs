@@ -58,5 +58,10 @@ namespace testapi.Controllers
             
             return Ok(product);
         }
+        [HttpGet("all-products")]
+        public async Task<IActionResult> getProducts() {
+
+            return Ok(AppDbContext.Products.ToList());
+        }
     }
 }
