@@ -1,6 +1,6 @@
-<form method="post">
-<label>email</label><input type="text">
-<label>password</label><input type="password">
-<button type="submit">Log In</button>
-</form> 
-<button (click)="register_button_click()">Dont have an account? Register here</button>
+<div class="login-container">
+<label>email</label><input type="text" [(ngModel)]="email">
+<label>password</label><input type="password" [(ngModel)]="password">
+<button type="button" (click)="LogIn_Clicked()">Log In</button>
+<button type="button" (click)="register_button_click()">Dont have an account? Register here</button>
+</div>
