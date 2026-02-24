@@ -5,6 +5,7 @@ import { Login } from './login/login';
 import { Register } from './register/register';
 import { Namefromid } from './namefromid';
 import { ChangeDetectorRef } from '@angular/core';
+import { SignalIrService } from './signal-ir-service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet,NavBar,Login,Register],
@@ -17,7 +18,15 @@ export class App {
   registerb = false;
   user_id=-1 ;
   username="";
-  constructor(private namefromid:Namefromid, private cdr:ChangeDetectorRef){}
+  constructor(private namefromid:Namefromid, private cdr:ChangeDetectorRef,private signalir:SignalIrService){}
+  ngOnInit(){
+    this.signalir.startConnection();
+    this.signalir.notificationReceived.subscribe(data=>{
+      console.log('Nowy produkt:',data);
+    })
+
+
+  }
   ChangeToRegister(){
   console.log("Otrzymano alert");
     this.loginb=false;
